@@ -68,7 +68,7 @@ const Account = () => {
 
 
   return (
-    <div className='min-h-screen md:pt-0 pb-10 md:p-8'>
+    <div className='min-h-screen p-6 pb-10 md:p-8'>
 
       <div className='flex flex-col lg:flex-row max-w-8xl mx-auto gap-12 lg:gap-20'>
 
