@@ -1,6 +1,7 @@
 flask
 flask-cors
 mysql-connector-python
+python-dotenv
 pymysql
 razorpay
 gunicorn
