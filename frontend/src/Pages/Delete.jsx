@@ -10,7 +10,7 @@ const Delete = () => {
   const handleAuth = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://127.0.0.1:5000/delete", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/delete`, {
         userid: userID,
         password: password,
       });

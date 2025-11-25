@@ -12,7 +12,7 @@ const Login = () => {
     setStatus("checking");
 
     try {
-      const res = await axios.post("http://127.0.0.1:5000/login", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
         userid: userID,
         password: password,
       });

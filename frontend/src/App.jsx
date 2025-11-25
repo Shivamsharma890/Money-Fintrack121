@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Home from '../src/Components/Home'
 import Header from './Components/Header'
-import { Route, Routes } from 'react-router-dom'
+import { data, Route, Routes } from 'react-router-dom'
 import Footer from './Components/Footer'
 import Learn from './Components/Learnit'
 import Account from './Pages/Account'
@@ -17,7 +17,7 @@ const App = () => {
   const [display, setDisplay] = useState([]);
 
   const PyAPI = async () => {
-    const response = await axios.get("http://127.0.0.1:5000/users");
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
     setDisplay(response.data);
     console.log(response.data);
   };

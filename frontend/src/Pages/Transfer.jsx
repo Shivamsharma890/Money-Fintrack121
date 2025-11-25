@@ -31,7 +31,7 @@ const Transfer = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://127.0.0.1:5000/transfer", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/transfer`, {
         userid,
         password,
         action: "auth",
@@ -62,7 +62,7 @@ const Transfer = () => {
     }
 
     try {
-      const orderRes = await axios.post("http://127.0.0.1:5000/create_order", {
+      const orderRes = await axios.post(`${import.meta.env.VITE_API_URL}/create_order`, {
         amount: Number(amount),
       });
 
@@ -90,7 +90,7 @@ const Transfer = () => {
         handler: async function (razorpayResponse) {
           try {
             const verifyRes = await axios.post(
-              "http://127.0.0.1:5000/verify_payment",
+              `${import.meta.env.VITE_API_URL}/verify_payment`,
               {
                 razorpay_payment_id: razorpayResponse.razorpay_payment_id,
                 razorpay_order_id: razorpayResponse.razorpay_order_id,
@@ -100,7 +100,7 @@ const Transfer = () => {
 
             if (verifyRes.data.success) {
               const updateRes = await axios.post(
-                "http://127.0.0.1:5000/transfer",
+                `${import.meta.env.VITE_API_URL}/transfer`,
                 {
                   userid,
                   password,
@@ -143,7 +143,7 @@ const Transfer = () => {
     }
 
     try {
-      const res = await axios.post("http://127.0.0.1:5000/transfer", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/transfer`, {
         userid,
         password,
         action: "withdraw",

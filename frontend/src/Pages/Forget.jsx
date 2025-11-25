@@ -15,7 +15,7 @@ const Forgot = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://127.0.0.1:5000/forgot", { phone });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/forgot`, { phone });
 
       if (res.data.user) {
         setForm({
@@ -36,7 +36,7 @@ const Forgot = () => {
   // ------------------------------Update userid + password in database----------------------------------
   const handleUpdate = async () => {
     try {
-      const res = await axios.post("http://127.0.0.1:5000/updateCredentials", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/updateCredentials`, {
         phone,
         userid: form.userid,
         password: form.password,

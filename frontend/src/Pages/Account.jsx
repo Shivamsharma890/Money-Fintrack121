@@ -26,7 +26,7 @@ const Account = () => {
 
     try {
       const res = await axios.post(
-        "http://127.0.0.1:5000/account",
+        `${import.meta.env.VITE_API_URL}/account`,
         form,
         {
           headers: { "Content-Type": "application/json" }
