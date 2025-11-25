@@ -1,4 +1,6 @@
 flask
 flask-cors
-pymongo
+mysql-connector-python
+pymysql
+razorpay
 gunicorn
