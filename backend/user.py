@@ -79,6 +79,13 @@ def get_users():
 
         cursor.execute("SELECT * FROM users")
         rows = cursor.fetchall()
+        for row in rows:
+          if row["balance"] is None:
+              row["balance"] = 0
+
+        
+        
+        
 
         cursor.close()
         conn.close()
@@ -179,7 +186,16 @@ def transfer():
         userid = data.get("userid")
         password = data.get("password")
         action = data.get("action")
-        amount = int(data.get("amount", 0))
+        # amount = int(data.get("amount", 0))
+        raw_amount = data.get("amount")
+
+        if raw_amount in [None, "", "null"]:
+         return jsonify({"error": "Amount is missing"}), 400
+
+        amount = int(float(raw_amount))
+        
+        
+        
 
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
