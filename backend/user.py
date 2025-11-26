@@ -18,39 +18,39 @@ app = Flask(__name__)
 CORS(app)
 
 def get_connection():
-     # support both local .env names and Railway's default variable names
-    host = os.getenv("host") or os.getenv("MYSQLHOST") or os.getenv("MYSQL_URL") or os.getenv("MYSQL_PUBLIC_URL")
-    user = os.getenv("user") or os.getenv("MYSQLUSER") or os.getenv("MYSQL_USERNAME") or os.getenv("MYSQL_ROOT_USER")
-    password = os.getenv("password") or os.getenv("MYSQLPASSWORD") or os.getenv("MYSQL_ROOT_PASSWORD") or os.getenv("MYSQL_ROOT_PASS")
-    database = os.getenv("database") or os.getenv("MYSQLDATABASE") or os.getenv("MYSQL_DATABASE") or os.getenv("MYSQL_DATABASE_NAME")
-    port_str = os.getenv("port") or os.getenv("MYSQLPORT") or os.getenv("MYSQL_PORT_NUMBER") or "3306"
+    #  # support both local .env names and Railway's default variable names
+    # host = os.getenv("host") or os.getenv("MYSQLHOST") or os.getenv("MYSQL_URL") or os.getenv("MYSQL_PUBLIC_URL")
+    # user = os.getenv("user") or os.getenv("MYSQLUSER") or os.getenv("MYSQL_USERNAME") or os.getenv("MYSQL_ROOT_USER")
+    # password = os.getenv("password") or os.getenv("MYSQLPASSWORD") or os.getenv("MYSQL_ROOT_PASSWORD") or os.getenv("MYSQL_ROOT_PASS")
+    # database = os.getenv("database") or os.getenv("MYSQLDATABASE") or os.getenv("MYSQL_DATABASE") or os.getenv("MYSQL_DATABASE_NAME")
+    # port_str = os.getenv("port") or os.getenv("MYSQLPORT") or os.getenv("MYSQL_PORT_NUMBER") or "3306"
 
-    try:
-        port = int(port_str)
-    except:
-        port = 3306
+    # try:
+    #     port = int(port_str)
+    # except:
+    #     port = 3306
 
-    # debug print so you can see what values are being picked up in logs
-    print("DB CONNECT VALUES: host=", bool(host), " user=", bool(user), " db=", bool(database), " port=", port)
+    # # debug print so you can see what values are being picked up in logs
+    # print("DB CONNECT VALUES: host=", bool(host), " user=", bool(user), " db=", bool(database), " port=", port)
 
-    return mysql.connector.connect(
-        host=host,
-        user=user,
-        password=password,
-        database=database,
-        port=port
-    )
-    
-    
-    
-    
     # return mysql.connector.connect(
-    #     host=os.getenv("host"),
-    #     user=os.getenv("user"),
-    #     password=os.getenv("password"),
-    #     database=os.getenv("database"),
-    #     port=int(os.getenv("port"))
+    #     host=host,
+    #     user=user,
+    #     password=password,
+    #     database=database,
+    #     port=port
     # )
+    
+    
+    
+    
+    return mysql.connector.connect(
+        host=os.getenv("MYSQLHOST"),
+        user=os.getenv("MYSQLUSER"),
+        password=os.getenv("MYSQLPASSWORD"),
+        database=os.getenv("MYSQLDATABASE"),
+        port=int(os.getenv("MYSQLPORT"))
+    )
 
 #-----------------------Account-Create-----------------------
 @app.route("/account", methods=["POST"])
