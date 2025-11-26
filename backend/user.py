@@ -189,10 +189,15 @@ def transfer():
         # amount = int(data.get("amount", 0))
         raw_amount = data.get("amount")
 
-        if raw_amount in [None, "", "null"]:
-         return jsonify({"error": "Amount is missing"}), 400
+        # FIX: Validate amount properly
+        if raw_amount is None or raw_amount == "" or raw_amount == "null":
+            return jsonify({"error": "Amount is missing"}), 400
 
-        amount = int(float(raw_amount))
+        # FIX: Convert safely
+        try:
+            amount = int(float(raw_amount))
+        except:
+            return jsonify({"error": "Invalid amount format"}), 400
         
         
         
