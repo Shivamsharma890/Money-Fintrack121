@@ -80,8 +80,10 @@ def get_users():
         cursor.execute("SELECT * FROM users")
         rows = cursor.fetchall()
         for row in rows:
-          if row["balance"] is None:
-              row["balance"] = 0
+            try:
+                row["balance"] = int(row["balance"]) if row["balance"] is not None else 0
+            except:
+                row["balance"] = 0
 
         
         
