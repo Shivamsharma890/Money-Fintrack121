@@ -215,20 +215,6 @@ def transfer():
         password = data.get("password")
         action = data.get("action")
         amount = int(data.get("amount", 0))
-        # raw_amount = data.get("amount")
-
-        # # FIX: Validate amount properly
-        # if raw_amount is None or raw_amount == "" or raw_amount == "null":
-        #     return jsonify({"error": "Amount is missing"}), 400
-
-        # # FIX: Convert safely
-        # try:
-        #     amount = int(float(raw_amount))
-        # except:
-        #     return jsonify({"error": "Invalid amount format"}), 400
-        
-        
-        
 
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)

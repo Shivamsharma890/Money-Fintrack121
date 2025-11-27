@@ -13,7 +13,7 @@ const Balance = () => {
     setStatus("checking");
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}balance`, {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/balance`, {
         userid: userID,
         password: password,
       });
