@@ -279,10 +279,25 @@ def transfer():
         """)
         print("DEBUG VALUES:", userid, tx_type, amount, balance, description, timestamp)
 
-        cursor.execute("""
+        try:
+          cursor.execute("""
             INSERT INTO transactions (userid, type, amount, balance_after, description, date)
             VALUES (%s, %s, %s, %s, %s, %s)
         """, (userid, tx_type, amount, balance, description, timestamp))
+        
+        except Exception as sql_error:
+          print("TRANSACTION INSERT ERROR:", sql_error)
+          return jsonify({"error": "Insert failed", "details": str(sql_error)}), 500
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         conn.commit()
 
         cursor.close()
