@@ -15,11 +15,24 @@ const Transfer = () => {
   const [message, setMessage] = useState("");
 
   // ---------------------Load-Razorpay---------------------------
-  const loadRazorpayScript = () => {
+  const loadRazorpayScript = (mode) => {
     return new Promise((resolve) => {
-      if (window.Razorpay) return resolve(true);
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      // if (window.Razorpay) return resolve(true);
+      // const script = document.createElement("script");
+      // script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      //*********************************************** */
+        const existing = document.querySelector("#rzp-checkout");
+    if (existing) existing.remove();
+
+    const script = document.createElement("script");
+    script.id = "rzp-checkout";
+
+    // Load the correct script
+    script.src =
+      mode === "test"
+        ? "https://checkout.razorpay.com/v1/checkout.js?test=true"
+        : "https://checkout.razorpay.com/v1/checkout.js";
+      //*********************************************** */
       script.onload = () => resolve(true);
       script.onerror = () => resolve(false);
       document.body.appendChild(script);
@@ -55,7 +68,10 @@ const Transfer = () => {
       alert("Enter valid amount");
       return;
     }
-    const loaded = await loadRazorpayScript();
+    // const loaded = await loadRazorpayScript();
+    const loaded = await loadRazorpayScript(
+  stage === "deposit_test" ? "test" : "live"
+);
     if (!loaded) {
       alert("Razorpay failed to load");
       return;
@@ -92,7 +108,10 @@ const Transfer = () => {
 
         notes: { userid: userid },
 
-        theme: { color: "#1A73E8" },
+        // theme: { color: "#1A73E8" },
+        theme: {
+  color: stage === "deposit_test" ? "#F37254" : "#1A73E8" 
+},
 
         handler: async function (razorpayResponse) {
           try {
