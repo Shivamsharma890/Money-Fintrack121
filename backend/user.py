@@ -266,6 +266,41 @@ RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
 client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
 
 # Create-Order
+# @app.route("/create_order", methods=["POST"])
+# def create_order():
+#     try:
+#         data = request.get_json()
+#         print("Incoming order request:", data)
+
+#         amount_rupees = data.get("amount")
+
+#         if not amount_rupees:
+#             return jsonify({"error": "Missing amount"}), 400
+
+#         amount_paise = int(float(amount_rupees) * 100)
+
+#         receipt_id = f"rcpt_{int(time.time())}"
+
+#         order_data = {
+#             "amount": amount_paise,
+#             "currency": "INR",
+#             "receipt": receipt_id,
+#             "payment_capture": 1
+#         }
+
+#         order = client.order.create(order_data)
+#         print("Order Created Successfully:", order)
+
+#         return jsonify({
+#             "order_id": order["id"],
+#             "currency": "INR",
+#             "amount": amount_rupees
+#         }), 200
+
+#     except Exception as e:
+#         print("CREATE ORDER ERROR:", str(e))
+#         return jsonify({"error": str(e)}), 500
+#***************************************************************
 @app.route("/create_order", methods=["POST"])
 def create_order():
     try:
@@ -273,6 +308,7 @@ def create_order():
         print("Incoming order request:", data)
 
         amount_rupees = data.get("amount")
+        mode = data.get("mode")  # "test" or "live"
 
         if not amount_rupees:
             return jsonify({"error": "Missing amount"}), 400
@@ -281,15 +317,29 @@ def create_order():
 
         receipt_id = f"rcpt_{int(time.time())}"
 
-        order_data = {
+        # ------------------------
+        # Select Razorpay client
+        # ------------------------
+        if mode == "test":
+            print("Creating TEST Razorpay Order...")
+            client = razorpay.Client(auth=(
+                os.getenv("RAZORPAY_TEST_KEY_ID"),
+                os.getenv("RAZORPAY_TEST_KEY_SECRET")
+            ))
+        else:
+            print("Creating LIVE Razorpay Order...")
+            client = razorpay.Client(auth=(
+                os.getenv("RAZORPAY_KEY_ID"),
+                os.getenv("RAZORPAY_KEY_SECRET")
+            ))
+
+        # Create order
+        order = client.order.create({
             "amount": amount_paise,
             "currency": "INR",
             "receipt": receipt_id,
             "payment_capture": 1
-        }
-
-        order = client.order.create(order_data)
-        print("Order Created Successfully:", order)
+        })
 
         return jsonify({
             "order_id": order["id"],
@@ -300,7 +350,7 @@ def create_order():
     except Exception as e:
         print("CREATE ORDER ERROR:", str(e))
         return jsonify({"error": str(e)}), 500
-
+#***************************************************************
 # Verify-Payment
 @app.route("/verify_payment", methods=["POST"])
 def verify_payment():

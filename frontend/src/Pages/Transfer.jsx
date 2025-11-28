@@ -64,6 +64,7 @@ const Transfer = () => {
     try {
       const orderRes = await axios.post(`${import.meta.env.VITE_API_URL}/create_order`, {
         amount: Number(amount),
+        mode: stage === "deposit_test" ? "test" : "live"
       });
 
       const { order_id, amount: orderAmount } = orderRes.data;
