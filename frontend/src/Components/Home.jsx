@@ -62,8 +62,8 @@ const Home = () => {
       {/* --------------------------------more-information-------------------------------- */}
 
       <div className='flex justify-center gap-15 pt-5 items-center flex-wrap'>
-        <div>
-          <img className='h-100' src={Pengune} alt='future' />
+        <div className='w-full lg:w-1/2 flex justify-center'>
+          <img className='h-72 sm:h-96 object-contain' src={Pengune} alt='future' />
         </div>
         <div className='w-160 space-y-5 p-5'>
           <h3 className='bg-blue-600 w-fit px-4 text-center font-semibold py-1 rounded-4xl text-white text-sm '>AI-POWERED BANKING PLATFORM</h3>
@@ -83,14 +83,14 @@ const Home = () => {
           <h2 className='text-lg'>By connecting our fintech specialists directly with your teams, banks can rapidly co-create impactful financial solutions, drive smarter operations, and turn ideas into action — with speed, trust, and precision.</h2>
           <h2 className='text-blue-600 text-lg font-bold cursor-pointer hover:text-blue-700'>Explore the Fintech Lab →</h2>
         </div>
-        <div>
-          <img className='h-110' src={truck} alt='future' />
+        <div className='w-full lg:w-1/2 flex justify-center'>
+          <img className='h-72 sm:h-96 object-contain' src={truck} alt='future' />
         </div>
       </div>
 
       <div className='flex justify-center gap-15 pt-5 items-center flex-wrap'>
-        <div>
-          <img className='h-90' src={suite} alt='future' />
+        <div className='w-full lg:w-1/2 flex justify-center'>
+          <img className='h-72 sm:h-96 object-contain' src={suite} alt='future' />
         </div>
         <div className='w-160 space-y-5 p-5'>
           <h3 className='bg-blue-600 w-fit px-4 text-center font-semibold py-1 rounded-4xl text-white text-sm '>THE SMART FINTRACK SUITE</h3>
@@ -110,8 +110,8 @@ const Home = () => {
           <h2 className='text-lg'>Deliver accuracy and innovation at scale — the right solution, at the right time, every time.</h2>
           <h2 className='text-blue-600 text-lg font-bold cursor-pointer hover:text-blue-700'>Explore the Solutions →</h2>
         </div>
-        <div>
-          <img className='h-140' src={fincore} alt='future' />
+        <div className='w-full lg:w-1/2 flex justify-center'>
+          <img className='h-72 sm:h-110 object-contain' src={fincore} alt='future' />
         </div>
       </div>
       {/* ------------------------Elevate-Section--------------------------- */}

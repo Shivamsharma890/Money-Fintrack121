@@ -222,13 +222,13 @@ const Transfer = () => {
           <div className="flex flex-col md:flex-row gap-4 justify-center mt-6">
             <button
               onClick={() => setStage("deposit")}
-              className="flex-1 py-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 shadow"
+              className="flex-1 py-4 bg-[#1A73E8] text-white font-semibold rounded-lg hover:bg-[#1666CA] shadow"
             >
               Deposit Real Money (Razorpay)
             </button>
             <button
               onClick={() => setStage("deposit_test")}
-              className="flex-1 py-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 shadow"
+              className="flex-1 py-4 bg-[#d2522e] text-white font-semibold rounded-lg hover:bg-[#be3711] shadow"
             >
               Deposit Test Money (Razorpay)
             </button>

@@ -11,19 +11,42 @@ const Learnit = () => {
   return (
     <div>
       {/* --------------------------------Intelligence-Platform-Section--------------------------------- */}
-      <div style={{ backgroundImage: `url(${back})` }} className='flex justify-center gap-x-35 pt-5 items-center flex-wrap '>
-        <div className='w-140 space-y-6 p-5'>
-          <h1 className=' text-4xl font-extrabold leading-tight'>Fintrack Intelligent Finance Platform</h1>
-          <h2 className='text-xl font-bold'>The next-generation foundation for digital banking excellence</h2>
-          <h2 className='text-lg'>The financial world is evolving faster than ever — and innovation is no longer optional, it’s essential.
-            Money Fintrack is your intelligent finance platform, designed to unify banking, analytics, and automation into one seamless ecosystem.
-            Built to eliminate outdated processes and ignite smarter growth, Fintrack empowers institutions to deliver real-time insights, personalized
-            services, and dynamic customer experiences.Step into the future of banking — where every transaction is intelligent, every decision is data-driven,
-            and your bank stays ahead of change.</h2>
-          <button onClick={() => navigate("/account")} className='bg-blue-600 px-4 py-2 cursor-pointer rounded-sm text-white font-semibold text-xl hover:bg-blue-700 shadow-[0px_0px_10px] shadow-gray-500'>Start Your Fintrack Journey →</button>
-        </div>
-        <div>
-          <img className='h-110 pr-10' src={Pengune} alt='future' />
+      <div style={{ backgroundImage: `url(${back})` }} className=" bg-center px-6 py-10 md:px-12 lg:px-20 w-full">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10">
+          <div className="w-full lg:w-1/2 space-y-5">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-snug">
+              Fintrack Intelligent Finance Platform
+            </h1>
+
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold">
+              The next-generation foundation for digital banking excellence
+            </h2>
+
+            <p className="text-base sm:text-lg lg:text-xl text-gray-800 leading-relaxed">
+              The financial world is evolving faster than ever — and innovation is no longer optional, it’s essential.
+              Money Fintrack is your intelligent finance platform, designed to unify banking, analytics, and automation into one seamless ecosystem.
+              Built to eliminate outdated processes and ignite smarter growth, Fintrack empowers institutions to deliver real-time insights, personalized
+              services, and dynamic customer experiences. Step into the future of banking — where every transaction is intelligent, every decision is data-driven,
+              and your bank stays ahead of change.
+            </p>
+
+            <button
+              onClick={() => navigate("/account")}
+              className="bg-blue-600 px-6 py-3 rounded-md text-white font-semibold text-lg sm:text-xl 
+                   hover:bg-blue-700 shadow-lg transition"
+            >
+              Start Your Fintrack Journey →
+            </button>
+          </div>
+
+          <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+            <img
+              src={Pengune}
+              alt="future"
+              className="h-72 sm:h-96 object-contain"
+            />
+          </div>
+
         </div>
       </div>
       {/* ------------------------------Future-Information----------------------------------- */}
@@ -56,8 +79,8 @@ const Learnit = () => {
           <h2 className='text-lg'>Money Fintrack powers every stage of your financial journey — from account creation to customer engagement, retention, and intelligent growth.
             Our AI-driven platform removes data silos, connects teams and systems, and delivers seamless digital experiences across channels.</h2>
         </div>
-        <div>
-          <img className='h-150 pr-10' src={bank} alt='future' />
+        <div className='flex justify-center'>
+          <img className='object-contain' src={bank} alt='future' />
         </div>
       </div>
 
@@ -76,8 +99,8 @@ const Learnit = () => {
             Money Fintrack unifies your entire customer experience across devices — mobile, web, and branches — with a smart AI-first platform that adapts to your
             business pace.Deliver personalized journeys that inspire trust, strengthen loyalty, and accelerate sustainable financial growth.</h2>
         </div>
-        <div>
-          <img className='h-150 pr-10' src={ecosystem} alt='future' />
+        <div className='flex justify-center'>
+          <img className=' object-contain' src={ecosystem} alt='future' />
         </div>
       </div>
 
