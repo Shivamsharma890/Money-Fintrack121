@@ -20,19 +20,6 @@ const Transfer = () => {
       // if (window.Razorpay) return resolve(true);
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      //*********************************************** */
-    //     const existing = document.querySelector("#rzp-checkout");
-    // if (existing) existing.remove();
-
-    // const script = document.createElement("script");
-    // script.id = "rzp-checkout";
-
-    // // Load the correct script
-    // script.src =
-    //   mode === "test"
-    //     ? "https://checkout.razorpay.com/v1/checkout.js?test=true"
-    //     : "https://checkout.razorpay.com/v1/checkout.js";
-      //*********************************************** */
       script.onload = () => resolve(true);
       script.onerror = () => resolve(false);
       document.body.appendChild(script);
@@ -68,10 +55,7 @@ const Transfer = () => {
       alert("Enter valid amount");
       return;
     }
-    // const loaded = await loadRazorpayScript();
-    const loaded = await loadRazorpayScript(
-  stage === "deposit_test" ? "test" : "live"
-);
+    const loaded = await loadRazorpayScript();
     if (!loaded) {
       alert("Razorpay failed to load");
       return;
