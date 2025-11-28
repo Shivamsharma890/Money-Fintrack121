@@ -94,7 +94,6 @@ def get_users():
         print("MYSQL ERROR:", e)
         return jsonify({"error": str(e)}), 500
     
-
 #---------------------Login-------------------------
 @app.route("/login", methods=["POST"])
 def login_user():
@@ -259,48 +258,6 @@ def transfer():
         return jsonify({"error": str(e)}), 500
     
 #------------------------------Razorpay-Connections------------------------------------------------------
-RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
-RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
-
-# Initialize-Razorpay-client
-client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
-
-# Create-Order
-# @app.route("/create_order", methods=["POST"])
-# def create_order():
-#     try:
-#         data = request.get_json()
-#         print("Incoming order request:", data)
-
-#         amount_rupees = data.get("amount")
-
-#         if not amount_rupees:
-#             return jsonify({"error": "Missing amount"}), 400
-
-#         amount_paise = int(float(amount_rupees) * 100)
-
-#         receipt_id = f"rcpt_{int(time.time())}"
-
-#         order_data = {
-#             "amount": amount_paise,
-#             "currency": "INR",
-#             "receipt": receipt_id,
-#             "payment_capture": 1
-#         }
-
-#         order = client.order.create(order_data)
-#         print("Order Created Successfully:", order)
-
-#         return jsonify({
-#             "order_id": order["id"],
-#             "currency": "INR",
-#             "amount": amount_rupees
-#         }), 200
-
-#     except Exception as e:
-#         print("CREATE ORDER ERROR:", str(e))
-#         return jsonify({"error": str(e)}), 500
-#***************************************************************
 @app.route("/create_order", methods=["POST"])
 def create_order():
     try:
@@ -308,7 +265,7 @@ def create_order():
         print("Incoming order request:", data)
 
         amount_rupees = data.get("amount")
-        mode = data.get("mode")  # "test" or "live"
+        mode = data.get("mode")
 
         if not amount_rupees:
             return jsonify({"error": "Missing amount"}), 400
@@ -317,9 +274,6 @@ def create_order():
 
         receipt_id = f"rcpt_{int(time.time())}"
 
-        # ------------------------
-        # Select Razorpay client
-        # ------------------------
         if mode == "test":
             print("Creating TEST Razorpay Order...")
             client = razorpay.Client(auth=(
@@ -333,7 +287,6 @@ def create_order():
                 os.getenv("RAZORPAY_KEY_SECRET")
             ))
 
-        # Create order
         order = client.order.create({
             "amount": amount_paise,
             "currency": "INR",
@@ -350,39 +303,9 @@ def create_order():
     except Exception as e:
         print("CREATE ORDER ERROR:", str(e))
         return jsonify({"error": str(e)}), 500
-#***************************************************************
-# Verify-Payment
-# @app.route("/verify_payment", methods=["POST"])
-# def verify_payment():
-#     try:
-#         body = request.json
-#         print("Verify request:", body)
 
-#         payment_id = body.get("razorpay_payment_id")
-#         order_id = body.get("razorpay_order_id")
-#         signature = body.get("razorpay_signature")
+# Verify Payment
 
-#         if not all([payment_id, order_id, signature]):
-#             return jsonify({"error": "Missing parameters"}), 400
-
-#         payload = f"{order_id}|{payment_id}"
-
-#         generated_signature = hmac.new(
-#             RAZORPAY_KEY_SECRET.encode(),
-#             payload.encode(),
-#             hashlib.sha256
-#         ).hexdigest()
-
-#         if generated_signature == signature:
-#             print("Payment Verified Successfully!")
-#             return jsonify({"success": True}), 200
-#         else:
-#             return jsonify({"error": "Invalid signature"}), 400
-
-#     except Exception as e:
-#         print("VERIFY PAYMENT ERROR:", e)
-#         return jsonify({"error": str(e)}), 500
-#*********************************************************
 @app.route("/verify_payment", methods=["POST"])
 def verify_payment():
     try:
@@ -392,14 +315,11 @@ def verify_payment():
         payment_id = data.get("razorpay_payment_id")
         order_id = data.get("razorpay_order_id")
         signature = data.get("razorpay_signature")
-        mode = data.get("mode")  # "test" or "live"
+        mode = data.get("mode")
 
         if not payment_id or not order_id or not signature:
             return jsonify({"error": "Missing parameters"}), 400
 
-        # -------------------------------------
-        # Select correct razorpay secret key
-        # -------------------------------------
         if mode == "test":
             secret = os.getenv("RAZORPAY_TEST_KEY_SECRET")
             print("Using TEST SECRET for verification")
@@ -407,7 +327,6 @@ def verify_payment():
             secret = os.getenv("RAZORPAY_KEY_SECRET")
             print("Using LIVE SECRET for verification")
 
-        # Compute expected signature
         payload = f"{order_id}|{payment_id}"
 
         generated_signature = hmac.new(
@@ -426,7 +345,7 @@ def verify_payment():
     except Exception as e:
         print("VERIFY PAYMENT ERROR:", e)
         return jsonify({"error": str(e)}), 500
-#*********************************************************
+    
 # Razorpay-Webhook(optional)
 @app.route("/razorpay_webhook", methods=["POST"])
 def razorpay_webhook():

@@ -15,9 +15,8 @@ const Transfer = () => {
   const [message, setMessage] = useState("");
 
   // ---------------------Load-Razorpay---------------------------
-  const loadRazorpayScript = (mode) => {
+  const loadRazorpayScript = () => {
     return new Promise((resolve) => {
-      // if (window.Razorpay) return resolve(true);
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onload = () => resolve(true);
@@ -70,13 +69,10 @@ const Transfer = () => {
       const { order_id, amount: orderAmount } = orderRes.data;
 
       const options = {
-        // key: import.meta.env.RAZORPAY_KEY_ID,
-        // ************************************
         key:
-  stage === "deposit_test"
-    ? import.meta.env.VITE_RAZORPAY_TEST_KEY_ID
-    : import.meta.env.VITE_RAZORPAY_KEY_ID,
-        // ************************************
+          stage === "deposit_test"
+            ? import.meta.env.VITE_RAZORPAY_TEST_KEY_ID
+            : import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: Number(orderAmount) * 100,
         currency: "INR",
         name: "Money Fintrack Secure Deposit",
@@ -92,10 +88,9 @@ const Transfer = () => {
 
         notes: { userid: userid },
 
-        // theme: { color: "#1A73E8" },
         theme: {
-  color: stage === "deposit_test" ? "#D85B3A" : "#1A73E8" 
-},
+          color: stage === "deposit_test" ? "#D85B3A" : "#1A73E8"
+        },
 
         handler: async function (razorpayResponse) {
           try {
@@ -105,8 +100,7 @@ const Transfer = () => {
                 razorpay_payment_id: razorpayResponse.razorpay_payment_id,
                 razorpay_order_id: razorpayResponse.razorpay_order_id,
                 razorpay_signature: razorpayResponse.razorpay_signature,
-                // ******************************************
-                mode: stage === "deposit_test" ? "test" : "live"  // <-- IMPORTANT
+                mode: stage === "deposit_test" ? "test" : "live"
               }
             );
 
@@ -232,14 +226,12 @@ const Transfer = () => {
             >
               Deposit Real Money (Razorpay)
             </button>
-            {/* ************************************************ */}
-                        <button
+            <button
               onClick={() => setStage("deposit_test")}
               className="flex-1 py-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 shadow"
             >
               Deposit Test Money (Razorpay)
             </button>
-            {/* ************************************************ */}
 
             <button
               onClick={() => setStage("withdraw")}
@@ -265,19 +257,13 @@ const Transfer = () => {
   return (
     <div className="flex items-center justify-center bg-gray-50 py-10">
       <div className="bg-amber-50 p-8 rounded-xl border border-amber-300 shadow-lg w-full max-w-4xl mx-auto">
-        {/* <h3 className="text-3xl font-extrabold mb-6 text-amber-800 text-center">
-          {isDeposit ? "Deposit Money (Razorpay)" : "Withdraw Money"}
-        </h3> */}
-        {/* ************************************************ */}
         <h3 className="text-3xl font-extrabold mb-6 text-amber-800 text-center">
-  {stage === "deposit"
-    ? "Deposit Money (Razorpay)"
-    : stage === "deposit_test"
-    ? "Deposit Money (Test Razorpay)"
-    : "Withdraw Money"}
-</h3>
-        {/* ************************************************ */}
-
+          {stage === "deposit"
+            ? "Deposit Money (Razorpay)"
+            : stage === "deposit_test"
+              ? "Deposit Money (Test Razorpay)"
+              : "Withdraw Money"}
+        </h3>
         <p className="text-center text-gray-700 mb-2 text-lg">Current Balance:</p>
         <p className="text-center text-3xl font-bold text-amber-700 mb-6">
           ₹{balance}
@@ -298,8 +284,8 @@ const Transfer = () => {
               else handleWithdraw();
             }}
             className={`w-full py-4 rounded-lg text-white font-semibold shadow-lg transition ${isDeposit
-                ? "bg-green-600 hover:bg-green-700"
-                : "bg-red-600 hover:bg-red-700"
+              ? "bg-green-600 hover:bg-green-700"
+              : "bg-red-600 hover:bg-red-700"
               }`}
           >
             {isDeposit ? "Pay & Deposit" : "Withdraw"}
