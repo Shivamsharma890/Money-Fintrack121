@@ -352,37 +352,81 @@ def create_order():
         return jsonify({"error": str(e)}), 500
 #***************************************************************
 # Verify-Payment
+# @app.route("/verify_payment", methods=["POST"])
+# def verify_payment():
+#     try:
+#         body = request.json
+#         print("Verify request:", body)
+
+#         payment_id = body.get("razorpay_payment_id")
+#         order_id = body.get("razorpay_order_id")
+#         signature = body.get("razorpay_signature")
+
+#         if not all([payment_id, order_id, signature]):
+#             return jsonify({"error": "Missing parameters"}), 400
+
+#         payload = f"{order_id}|{payment_id}"
+
+#         generated_signature = hmac.new(
+#             RAZORPAY_KEY_SECRET.encode(),
+#             payload.encode(),
+#             hashlib.sha256
+#         ).hexdigest()
+
+#         if generated_signature == signature:
+#             print("Payment Verified Successfully!")
+#             return jsonify({"success": True}), 200
+#         else:
+#             return jsonify({"error": "Invalid signature"}), 400
+
+#     except Exception as e:
+#         print("VERIFY PAYMENT ERROR:", e)
+#         return jsonify({"error": str(e)}), 500
+#*********************************************************
 @app.route("/verify_payment", methods=["POST"])
 def verify_payment():
     try:
-        body = request.json
-        print("Verify request:", body)
+        data = request.json
+        print("VERIFY REQUEST:", data)
 
-        payment_id = body.get("razorpay_payment_id")
-        order_id = body.get("razorpay_order_id")
-        signature = body.get("razorpay_signature")
+        payment_id = data.get("razorpay_payment_id")
+        order_id = data.get("razorpay_order_id")
+        signature = data.get("razorpay_signature")
+        mode = data.get("mode")  # "test" or "live"
 
-        if not all([payment_id, order_id, signature]):
+        if not payment_id or not order_id or not signature:
             return jsonify({"error": "Missing parameters"}), 400
 
+        # -------------------------------------
+        # Select correct razorpay secret key
+        # -------------------------------------
+        if mode == "test":
+            secret = os.getenv("RAZORPAY_TEST_KEY_SECRET")
+            print("Using TEST SECRET for verification")
+        else:
+            secret = os.getenv("RAZORPAY_KEY_SECRET")
+            print("Using LIVE SECRET for verification")
+
+        # Compute expected signature
         payload = f"{order_id}|{payment_id}"
 
         generated_signature = hmac.new(
-            RAZORPAY_KEY_SECRET.encode(),
+            secret.encode(),
             payload.encode(),
             hashlib.sha256
         ).hexdigest()
 
         if generated_signature == signature:
             print("Payment Verified Successfully!")
-            return jsonify({"success": True}), 200
-        else:
-            return jsonify({"error": "Invalid signature"}), 400
+            return jsonify({ "success": True }), 200
+
+        print("Signature mismatch")
+        return jsonify({ "success": False, "error": "Invalid signature" }), 400
 
     except Exception as e:
         print("VERIFY PAYMENT ERROR:", e)
         return jsonify({"error": str(e)}), 500
-
+#*********************************************************
 # Razorpay-Webhook(optional)
 @app.route("/razorpay_webhook", methods=["POST"])
 def razorpay_webhook():

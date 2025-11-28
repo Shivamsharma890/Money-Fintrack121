@@ -102,6 +102,8 @@ const Transfer = () => {
                 razorpay_payment_id: razorpayResponse.razorpay_payment_id,
                 razorpay_order_id: razorpayResponse.razorpay_order_id,
                 razorpay_signature: razorpayResponse.razorpay_signature,
+                // ******************************************
+                mode: stage === "deposit_test" ? "test" : "live"  // <-- IMPORTANT
               }
             );
 
