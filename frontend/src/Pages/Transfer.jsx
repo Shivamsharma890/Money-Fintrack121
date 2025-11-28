@@ -18,20 +18,20 @@ const Transfer = () => {
   const loadRazorpayScript = (mode) => {
     return new Promise((resolve) => {
       // if (window.Razorpay) return resolve(true);
-      // const script = document.createElement("script");
-      // script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
       //*********************************************** */
-        const existing = document.querySelector("#rzp-checkout");
-    if (existing) existing.remove();
+    //     const existing = document.querySelector("#rzp-checkout");
+    // if (existing) existing.remove();
 
-    const script = document.createElement("script");
-    script.id = "rzp-checkout";
+    // const script = document.createElement("script");
+    // script.id = "rzp-checkout";
 
-    // Load the correct script
-    script.src =
-      mode === "test"
-        ? "https://checkout.razorpay.com/v1/checkout.js?test=true"
-        : "https://checkout.razorpay.com/v1/checkout.js";
+    // // Load the correct script
+    // script.src =
+    //   mode === "test"
+    //     ? "https://checkout.razorpay.com/v1/checkout.js?test=true"
+    //     : "https://checkout.razorpay.com/v1/checkout.js";
       //*********************************************** */
       script.onload = () => resolve(true);
       script.onerror = () => resolve(false);
