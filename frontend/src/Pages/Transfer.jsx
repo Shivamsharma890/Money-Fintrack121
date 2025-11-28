@@ -110,7 +110,7 @@ const Transfer = () => {
 
         // theme: { color: "#1A73E8" },
         theme: {
-  color: stage === "deposit_test" ? "#F37254" : "#1A73E8" 
+  color: stage === "deposit_test" ? "#D85B3A" : "#1A73E8" 
 },
 
         handler: async function (razorpayResponse) {
