@@ -171,7 +171,7 @@ const Account = () => {
           {/* ---------------------------Phone-and-Address---------------------------*/}
           <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
             <div>
-              <label htmlFor="contact" className='text-lg font-medium text-gray-700 mb-1 block'>Phone Number (Optional)</label>
+              <label htmlFor="contact" className='text-lg font-medium text-gray-700 mb-1 block'>Phone Number*</label>
               <input
                 id="contact"
                 className='bg-gray-100 p-3 h-12 w-full text-base text-gray-900 rounded-lg placeholder-gray-400 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150'
@@ -182,6 +182,7 @@ const Account = () => {
                 inputMode='numeric'
                 maxLength="10"
                 placeholder='Enter contact number'
+                required
               />
             </div>
             <div>
